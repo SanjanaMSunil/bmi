@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <style>
+        
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f4f4f4;
+            background-image: url(https://as1.ftcdn.net/v2/jpg/02/74/19/28/1000_F_274192829_fTkt6KZgwhUCKD3N7zfGf1CybYubgjqB.jpg);
+            background-repeat: no-repeat;
+            margin: 0;
+            padding:0;
+            display: flex;
+            align-items: center;
+            justify-content: right;
+            height: 100vh;
+        }
+
+        #calculator {
+            background-image: url(https://petsci.co.uk/wp-content/uploads/2012/01/weight-watching1-548x330.jpg);
+            border: rgb(205, 205, 205) solid 1px;
+            border-radius: 8px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            margin-right: 250px;
+            color: white;
+            
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="calculator">
+        <h2>BMI Calculator</h2>
+        <label for="height">Height (cm):</label>
+        <input type="number" id="height" placeholder="Enter height" required>
+        
+        <label for="weight">Weight (kg):</label>
+        <input type="number" id="weight" placeholder="Enter weight" required>
+        
+        <label for="age">Age:</label>
+        <input type="number" id="age" placeholder="Enter age" required>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+        <br><br>
+
+        <button onclick="calculateBMI()">Calculate BMI</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calculateBMI() {
+            var height = parseFloat(document.getElementById("height").value);
+            var weight = parseFloat(document.getElementById("weight").value);
+            var age = parseInt(document.getElementById("age").value);
+            var gender = document.getElementById("gender").value;
+
+            if (isNaN(height) || isNaN(weight) || isNaN(age)) {
+                alert("Please enter valid values for height, weight, and age.");
+                return;
+            }
+
+            var bmi = weight / ((height / 100) * (height / 100));
+
+            var result = "BMI: " + bmi.toFixed(2) + "<br>";
+
+            if (age <= 18) {
+                result += "BMI categories for children and adolescents are different. Consult with a healthcare professional.";
+            } else {
+                if (gender === "male") {
+                    result += getBMICategoryForMen(bmi);
+                } else {
+                    result += getBMICategoryForWomen(bmi);
+                }
+            }
+
+            document.getElementById("result").innerHTML = result;
+        }
+
+        function getBMICategoryForMen(bmi) {
+            if (bmi < 18.5) {
+                return "Category: Underweight";
+            } else if (bmi < 24.9) {
+                return "Category: Normal weight";
+            } else if (bmi < 29.9) {
+                return "Category: Overweight";
+            } else {
+                return "Category: Obesity";
+            }
+        }
+
+        function getBMICategoryForWomen(bmi) {
+            if (bmi < 18.5) {
+                return "Category: Underweight";
+            } else if (bmi < 24.9) {
+                return "Category: Normal weight";
+            } else if (bmi < 29.9) {
+                return "Category: Overweight";
+            } else {
+                return "Category: Obesity";
+            }
+        }
+    </script>
+</body>
+</html>
